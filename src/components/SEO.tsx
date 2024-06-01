@@ -1,12 +1,13 @@
-import React from "react";
-import { useSiteMetadata } from "../hooks/useSiteMetadata";
+import React from 'react';
+import { useConsoleLog } from '../hooks/useConsoleLog';
+import { useSiteMetadata } from '../hooks/useSiteMetadata';
 
-export const SEO = ({ title, description, pathname, children }: any) => {
-  const {
-    title: defaultTitle,
-    description: defaultDescription,
-    siteUrl,
-  } = useSiteMetadata();
+const componentName = 'SEO';
+
+const SEO = ({ title, description, pathname }: any) => {
+  const { title: defaultTitle, description: defaultDescription, siteUrl } = useSiteMetadata();
+
+  useConsoleLog(componentName);
 
   const seo = {
     title: title || defaultTitle,
@@ -18,11 +19,8 @@ export const SEO = ({ title, description, pathname, children }: any) => {
     <>
       <title>{seo.title}</title>
       <meta name="description" content={seo.description} />
-      <link
-        rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>👤</text></svg>"
-      />
-      {children}
     </>
   );
 };
+
+export default SEO;

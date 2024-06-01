@@ -1,13 +1,9 @@
-import { CommonProps } from "../../types";
+import { useConsoleLog } from '../hooks/useConsoleLog';
 
-interface SearchProps extends CommonProps {}
+const componentName = 'Search';
 
-const componentName = "Search";
-
-const Search = (props: SearchProps) => {
-  useEffect(() => {
-    console.log(`${props.message} ${componentName}`);
-  }, []);
+const Search = () => {
+  useConsoleLog(componentName);
 };
 
 export default Search;

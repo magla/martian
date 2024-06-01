@@ -1,17 +1,14 @@
-import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { CommonProps } from '../types';
-import TextInput, { TextInputProps, TextInputType } from './TextInput';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useConsoleLog } from '../hooks/useConsoleLog';
 import Eye from './Eye';
+import TextInput, { TextInputProps, TextInputType } from './TextInput';
 
 const componentName = 'PasswordInput';
 
-const PasswordInput = ({ label, name, autoComplete }: TextInputProps) => {
+const PasswordInput = ({ label, name, autoComplete, ...props }: TextInputProps) => {
   const [hidePassword, setHidePassword] = useState(true);
-  // const message = useContext();
 
-  // useEffect(() => {
-  //   console.log(`${message} ${componentName}`);
-  // }, []);
+  useConsoleLog(componentName);
 
   const handleClick = useCallback(() => {
     setHidePassword(!hidePassword);
@@ -23,7 +20,7 @@ const PasswordInput = ({ label, name, autoComplete }: TextInputProps) => {
   );
 
   return (
-    <TextInput label={label} type={inputType} name={name} autoComplete={autoComplete}>
+    <TextInput label={label} type={inputType} name={name} autoComplete={autoComplete} {...props}>
       <Eye show={!hidePassword} onClick={handleClick} />
     </TextInput>
   );

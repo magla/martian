@@ -7,8 +7,12 @@ import { User } from '../types';
 
 const componentName = 'PostCard';
 
-const PostCard = ({ post }: { post: AppPost }) => {
+const PostCard = ({ post }: { post?: AppPost }) => {
   useConsoleLog(componentName);
+
+  if (!post) {
+    return null;
+  }
 
   const user = useApi<User>(Endpoints.user, post.userId);
   const commentsText = useMemo(() => (post.comments.length === 1 ? 'comment' : 'comments'), [post]);

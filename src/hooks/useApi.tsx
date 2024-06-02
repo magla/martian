@@ -6,7 +6,7 @@ export enum Endpoints {
   comment = 'comments',
 }
 
-export function useAPI<T>(endpoint: Endpoints, id?: number): T | undefined {
+export function useAPI<T>(endpoint: Endpoints, id?: string | number): T | undefined {
   const [JSONresult, setJSONResult] = useState<T>();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export function useAPI<T>(endpoint: Endpoints, id?: number): T | undefined {
     };
 
     fetchFromAPI();
-  }, []);
+  }, [endpoint, id]);
 
   return JSONresult;
 }

@@ -17,7 +17,7 @@ const PostList = () => {
 
   return (
     <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-      {posts && posts.map((post: AppPost) => <PostCard post={post} />)}
+      {posts && posts.map((post?: AppPost) => <PostCard post={post} />)}
     </div>
   );
 };

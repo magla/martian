@@ -13,7 +13,12 @@ const Button = ({ text, onClick, disabled = false }: ButtonProps) => {
   useConsoleLog(componentName);
 
   return (
-    <button type="button" disabled={disabled} onClick={onClick} className="">
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={onClick}
+      className="text-sm font-bold uppercase hover:text-red"
+    >
       {text}
     </button>
   );

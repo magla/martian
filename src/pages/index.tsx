@@ -32,6 +32,6 @@ const Login = () => {
   );
 };
 
-export const Head = () => <SEO />;
+export const Head = () => <SEO title="Welcome to Martian" />;
 
 export default Login;

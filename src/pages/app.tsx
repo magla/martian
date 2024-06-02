@@ -6,7 +6,7 @@ import usePrivateRoute from '../hooks/usePrivateRoute';
 
 const componentName = 'App';
 
-const App = () => {
+const App = (props: any) => {
   usePrivateRoute();
   useConsoleLog(componentName);
 

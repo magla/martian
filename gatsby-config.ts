@@ -21,12 +21,6 @@ const config: GatsbyConfig = {
         icon: 'src/images/icon.png',
       },
     },
-    {
-      resolve: 'gatsby-source-rest-api',
-      options: {
-        endpoints: [`${process.env.API_URL}/posts`],
-      },
-    },
   ],
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import useConsoleLog from '../../hooks/useConsoleLog';
-import usePrivateRoute from '../../hooks/usePrivateRoute';
+import useConsoleLog from '../../../hooks/useConsoleLog';
+import usePrivateRoute from '../../../hooks/usePrivateRoute';
 
 const componentName = 'Post';
 

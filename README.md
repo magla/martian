@@ -1,8 +1,8 @@
 <p align="center">
-  <img alt="Martian&Machine" src="https://martian.ventures/favicon.svg" width="60" />
+  <img alt="Martian" src="https://martian.ventures/favicon.svg" width="60" />
 </p>
 <h1 align="center">
-  Martian & Marchine Test
+  Martian Test
 </h1>
 
 ## Dev info

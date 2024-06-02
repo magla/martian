@@ -1,24 +1,20 @@
-import * as React from "react";
-import { graphql, PageProps } from "gatsby";
+import React from 'react';
+import Layout from '../components/Layout';
+import PostList from '../components/PostList';
+import useConsoleLog from '../hooks/useConsoleLog';
+import usePrivateRoute from '../hooks/usePrivateRoute';
 
-const BlogIndex = ({ data }: PageProps<Queries.Query>) => {
+const componentName = 'App';
+
+const App = () => {
+  usePrivateRoute();
+  useConsoleLog(componentName);
+
   return (
-    <div>
-      <p>No blog posts found.</p>
-    </div>
+    <Layout showLogout>
+      <PostList />
+    </Layout>
   );
 };
 
-export default BlogIndex;
-
-export const Head = () => <div title="All posts" />;
-
-export const query = graphql`
-  query BlogIndex {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`;
+export default App;

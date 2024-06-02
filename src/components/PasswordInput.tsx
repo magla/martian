@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { useConsoleLog } from '../hooks/useConsoleLog';
+import useConsoleLog from '../hooks/useConsoleLog';
 import Eye from './Eye';
 import TextInput, { TextInputProps, TextInputType } from './TextInput';
 

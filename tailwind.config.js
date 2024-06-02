@@ -10,6 +10,11 @@ module.exports = {
     fontFamily: {
       sans: ['Montserrat', 'sans-serif'],
     },
-    extend: {},
+    extend: {
+      fontSize: {
+        h1: '48px',
+        h2: '36px',
+      },
+    },
   },
 };

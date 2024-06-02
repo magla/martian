@@ -1,4 +1,4 @@
-import { useConsoleLog } from '../hooks/useConsoleLog';
+import useConsoleLog from '../hooks/useConsoleLog';
 
 const componentName = 'Search';
 

@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler, ReactElement } from 'react';
-import { useConsoleLog } from '../hooks/useConsoleLog';
+import useConsoleLog from '../hooks/useConsoleLog';
 
 export enum TextInputType {
   text = 'text',
@@ -11,10 +11,10 @@ export interface TextInputProps {
   type?: TextInputType;
   name: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
-  showError?: boolean;
-  errorText?: string;
+  errors?: string[];
   label?: string;
   placeholder?: string;
+  defaultValue?: string;
   autoComplete?: string;
   children?: ReactElement;
 }
@@ -29,8 +29,8 @@ const TextInput = ({
   placeholder,
   autoComplete,
   children,
-  showError,
-  errorText,
+  defaultValue,
+  errors,
 }: TextInputProps) => {
   useConsoleLog(componentName);
 
@@ -49,13 +49,13 @@ const TextInput = ({
           className="block w-full py-3 mb-2 text-gray-600 border-b border-black bg-gray-50 sm:text-sm ring-transparent focus:border-red focus:outline-none focus:ring-gray-400"
           placeholder={placeholder}
           autoComplete={autoComplete}
-          defaultValue={undefined}
+          defaultValue={defaultValue}
         />
         {children && (
           <span className="absolute inset-y-0 right-0 flex items-center p-1 pr-3">{children}</span>
         )}
       </div>
-      {showError && <div className="text-red">{errorText}</div>}
+      {errors && <div className="text-red first-letter:uppercase">{errors[0]}</div>}
     </div>
   );
 };

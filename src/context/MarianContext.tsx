@@ -6,8 +6,10 @@ type ContextProps = {
   children: ReactElement;
 };
 
+const value = 'Hello from';
+
 const MartianProvider = ({ children }: ContextProps) => {
-  return <MartianContext.Provider value="Hello from">{children}</MartianContext.Provider>;
+  return <MartianContext.Provider value={value}>{children}</MartianContext.Provider>;
 };
 
 export default MartianContext;

@@ -1,22 +1,37 @@
-import * as React from 'react';
+import { navigate } from 'gatsby';
+import React, { useContext } from 'react';
+import Centered from '../components/Centered';
 import Header from '../components/Header';
 import LoginForm from '../components/LoginForm';
 import SEO from '../components/SEO';
-import { MartianProvider } from '../context/MarianContext';
-import { useSiteMetadata } from '../hooks';
+import AuthContext from '../context/AuthContext';
+import useConsoleLog from '../hooks/useConsoleLog';
+import useSiteMetadata from '../hooks/useSiteMetadata';
 
-const App = () => {
+const componentName = 'Login';
+
+const Login = () => {
+  const { authenticated } = useContext(AuthContext);
   const { title } = useSiteMetadata();
 
+  useConsoleLog(componentName);
+
+  if (authenticated) {
+    navigate('/app');
+
+    return null;
+  }
+
   return (
-    <MartianProvider>
-      <div className="flex flex-col w-full p-8 mx-auto bg-white md:p-10 md:max-w-md">
-        <Header text={title} />
+    <Centered>
+      <>
+        <Header text={title} showLogout={authenticated} />
         <LoginForm />
-      </div>
-    </MartianProvider>
+      </>
+    </Centered>
   );
 };
+
 export const Head = () => <SEO />;
 
-export default App;
+export default Login;

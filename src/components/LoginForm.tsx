@@ -31,7 +31,7 @@ const LoginForm = () => {
   const { submitted, handleInput, handleSubmitForm, inputState } = useForm(fields);
 
   return (
-    <form className="flex flex-col px-4">
+    <form className="flex flex-col mt-6">
       <div className="mb-6">
         <TextInput
           label="Email"

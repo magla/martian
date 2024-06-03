@@ -1,8 +1,8 @@
 import { navigate } from 'gatsby';
 import React, { useContext } from 'react';
 import Centered from '../components/Centered';
-import Header from '../components/Header';
 import LoginForm from '../components/LoginForm';
+import LogoTitle from '../components/LogoTitle';
 import SEO from '../components/SEO';
 import AuthContext from '../context/AuthContext';
 import useConsoleLog from '../hooks/useConsoleLog';
@@ -24,10 +24,10 @@ const Login = () => {
 
   return (
     <Centered>
-      <>
-        <Header text={title} showLogout={authenticated} />
+      <div className="my-6">
+        <LogoTitle text={title} />
         <LoginForm />
-      </>
+      </div>
     </Centered>
   );
 };

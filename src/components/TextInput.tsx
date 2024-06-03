@@ -8,9 +8,9 @@ export enum TextInputType {
 }
 
 export interface TextInputProps {
-  type?: TextInputType;
   name: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  type?: TextInputType;
   errors?: string[];
   label?: string;
   placeholder?: string;
@@ -57,9 +57,7 @@ const TextInput = forwardRef(
             defaultValue={defaultValue}
           />
           {children && (
-            <span className="absolute inset-y-0 right-0 flex items-center p-1 pr-3">
-              {children}
-            </span>
+            <span className="absolute inset-y-0 right-0 flex items-center p-1">{children}</span>
           )}
         </div>
         {errors && <div className="text-red first-letter:uppercase">{errors[0]}</div>}

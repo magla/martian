@@ -1,22 +1,28 @@
-import { Comment, Post } from '../types';
+import { Comment, Post, User } from '../types';
 
 export interface AppPost extends Post {
   comments: Comment[];
+  user?: User;
 }
 
-export const mapPost = (post?: Post, comments?: Comment[]): AppPost | undefined => {
+export const mapPost = (post?: Post, comments?: Comment[], users?: User[]): AppPost | undefined => {
   if (!post) return undefined;
 
   return {
     ...post,
-    comments: comments ? comments.filter((comment) => comment.postId === post.id) : [],
+    comments: comments ? comments.filter((comment) => comment.postId === post?.id) : [],
+    user: users ? users.find((user) => user.id === post?.userId) : undefined,
   };
 };
 
-export const mapPosts = (posts?: Post[], comments?: Comment[]): (AppPost | undefined)[] => {
+export const mapPosts = (
+  posts?: Post[],
+  comments?: Comment[],
+  users?: User[],
+): (AppPost | undefined)[] => {
   if (!posts) {
     return [];
   }
 
-  return posts.map((post) => mapPost(post, comments));
+  return posts.map((post) => post && mapPost(post, comments, users));
 };

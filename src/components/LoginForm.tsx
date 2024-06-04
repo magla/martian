@@ -13,12 +13,12 @@ const componentName = 'LoginForm';
 const fields = {
   email: {
     type: TextInputType.email,
-    defaultValue: 'your@email.com',
+    defaultValue: process.env.GATSBY_USERNAME,
     validators: [ValidatorType.required, ValidatorType.email],
   },
   password: {
     type: TextInputType.password,
-    defaultValue: '123456',
+    defaultValue: process.env.GATSBY_PASSWORD,
     validators: [ValidatorType.required],
   },
 };

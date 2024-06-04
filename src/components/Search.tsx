@@ -69,7 +69,7 @@ const Search = ({
   }, [inputRef, search]);
 
   return (
-    <div className="flex items-center justify-between mx-12 grow">
+    <div className="items-center justify-between hidden mx-12 sm:flex grow">
       <div className={`${searchClicked ? 'w-full' : 'w-0'} duration-300 overflow-hidden`}>
         <TextInput
           ref={inputRef}

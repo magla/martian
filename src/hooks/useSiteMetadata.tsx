@@ -7,7 +7,6 @@ const useSiteMetadata = (): Queries.SiteSiteMetadata => {
         siteMetadata {
           title
           description
-          siteUrl
         }
       }
     }

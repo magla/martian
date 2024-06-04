@@ -7,9 +7,7 @@ const componentName = 'Layout';
 const Layout = ({ children }: { children: React.ReactElement }) => {
   useConsoleLog(componentName);
 
-  return (
-    <div className="flex flex-col w-full px-4 mx-auto bg-white lg:max-w-screen-xl">{children}</div>
-  );
+  return <div className="flex flex-col w-full px-4 mx-auto lg:max-w-screen-xl">{children}</div>;
 };
 export const Head = () => <SEO />;
 

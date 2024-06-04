@@ -1,6 +1,9 @@
 import * as React from 'react';
+import { useMemo, useState } from 'react';
 import useConsoleLog from '../hooks/useConsoleLog';
+import useScreenSize from '../hooks/useScreenSize';
 import { AppPost } from '../mappers/post';
+import NextPrevious from './NextPrevious';
 import PostCard from './PostCard';
 
 const componentName = 'PostList';
@@ -8,10 +11,28 @@ const componentName = 'PostList';
 const PostList = ({ posts }: { posts: (AppPost | undefined)[] }) => {
   useConsoleLog(componentName);
 
+  const [showPosts, setShowPosts] = useState(posts);
+  const { md, lg } = useScreenSize();
+
+  const perPage = useMemo(() => {
+    if (md) {
+      return 12;
+    }
+
+    return 20;
+  }, [md, lg]);
+
   return (
-    <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-      {posts && posts.map((post?: AppPost) => <PostCard post={post} key={post?.id} />)}
-    </div>
+    <>
+      <div className="mb-6">
+        <NextPrevious<AppPost | undefined> data={posts} onChange={setShowPosts} perPage={perPage} />
+      </div>
+      <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+        {showPosts.map((item?: any) => (
+          <PostCard post={item} key={item?.id} />
+        ))}
+      </div>
+    </>
   );
 };
 

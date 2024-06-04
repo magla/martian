@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Layout from '../components/Layout';
 import PostList from '../components/PostList';
@@ -39,14 +40,15 @@ const App = () => {
   }, [posts]);
 
   return (
-    <>
-      <Header text={title} showLogout>
+    <div className="mb-40">
+      <Header text={`${title} Blog`} showLogout>
         <Search searchData={posts} searchKeys={['user.name', 'user.username']} />
       </Header>
       <Layout>
         <PostList posts={filteredPosts} />
       </Layout>
-    </>
+      <Footer text="Copywright @2024" />
+    </div>
   );
 };
 

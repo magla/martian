@@ -1,18 +1,17 @@
-import AuthContext from 'contexts/AuthContext';
+import { navigate } from 'gatsby';
 import useConsoleLog from 'hooks/useConsoleLog';
 import * as React from 'react';
 import { useCallback } from 'react';
+import { logout } from 'services/auth';
 
 const componentName = 'LogoutButton';
 
 const LogoutButton = () => {
-  const { authenticated, setAuthenticated } = React.useContext(AuthContext);
-
   useConsoleLog(componentName);
 
   const handleButtonClick = useCallback(() => {
-    setAuthenticated && setAuthenticated(!authenticated);
-  }, [authenticated]);
+    logout(() => navigate('/'));
+  }, []);
 
   return (
     <button

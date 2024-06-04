@@ -12,7 +12,7 @@ const SearchButton = ({ onClick }: SearchButtonProps) => {
   useConsoleLog(componentName);
 
   return (
-    <button type="button" onClick={onClick}>
+    <button type="button" onClick={onClick} className="p-3">
       <Search />
     </button>
   );

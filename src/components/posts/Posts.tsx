@@ -8,16 +8,20 @@ import SearchContext from 'contexts/SearchContext';
 import { PageProps } from 'gatsby';
 import useApi, { Endpoints, fetchFromAPI } from 'hooks/useApi';
 import useConsoleLog from 'hooks/useConsoleLog';
-import usePrivateRoute from 'hooks/usePrivateRoute';
 import useSiteMetadata from 'hooks/useSiteMetadata';
 import { mapPosts } from 'mappers/post';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { AppPost, Comment, Post, User } from '../types';
+import { AppPost, Comment, Post, User } from '../../types';
 
-const componentName = 'App';
+const componentName = 'Posts';
 
-const App = ({ location, serverData }: PageProps) => {
-  usePrivateRoute(location);
+type DataTypes = {
+  posts: Post[];
+  comments: Comment[];
+  users: User[];
+};
+
+const Posts = ({ serverData }: PageProps) => {
   useConsoleLog(componentName);
 
   const { title } = useSiteMetadata();
@@ -25,12 +29,26 @@ const App = ({ location, serverData }: PageProps) => {
 
   const { results } = useContext(SearchContext);
 
-  const apiPosts = (serverData as any)?.posts || useApi<Post[]>(Endpoints.post);
-  const apiComments = (serverData as any)?.comments || useApi<Comment[]>(Endpoints.comment);
-  const apiUsers = (serverData as any)?.users || useApi<User[]>(Endpoints.user);
+  const { result: apiPosts, loading: postsLoading } = useApi<Post[]>(
+    Endpoints.post,
+    !!(serverData as DataTypes)?.posts,
+  );
+  const { result: apiComments, loading: commentsLoading } = useApi<Comment[]>(
+    Endpoints.comment,
+    !!(serverData as DataTypes)?.comments,
+  );
+  const { result: apiUsers, loading: usersLoading } = useApi<User[]>(
+    Endpoints.user,
+    !!(serverData as DataTypes)?.users,
+  );
+
   const posts = useMemo(
     () => mapPosts(apiPosts, apiComments, apiUsers),
     [mapPosts, apiPosts, apiComments, apiUsers],
+  );
+  const loading = useMemo(
+    () => postsLoading || commentsLoading || usersLoading,
+    [postsLoading, commentsLoading, usersLoading],
   );
 
   useEffect(() => {
@@ -48,7 +66,7 @@ const App = ({ location, serverData }: PageProps) => {
           <SearchInput searchData={posts} searchKeys={['user.name', 'user.username']} />
         </Header>
         <Layout>
-          <PostList posts={filteredPosts} />
+          <PostList posts={filteredPosts} loading={loading} />
         </Layout>
       </div>
       <Footer />
@@ -79,4 +97,4 @@ export async function getServerData() {
     };
   }
 }
-export default App;
+export default Posts;

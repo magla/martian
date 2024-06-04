@@ -1,27 +1,35 @@
 import Border from 'components/layout/Border';
 import Centered from 'components/layout/Centered';
-import SEO from 'components/layout/SEO';
 import CommentList from 'components/posts/CommentList';
 import Previous from 'components/svgs/Previous';
 import { Link, PageProps } from 'gatsby';
 import useApi, { Endpoints, fetchFromAPI } from 'hooks/useApi';
 import useConsoleLog from 'hooks/useConsoleLog';
-import usePrivateRoute from 'hooks/usePrivateRoute';
 import { mapPost } from 'mappers/post';
 import React, { useMemo } from 'react';
 import { Comment, Post, User } from 'types';
 
+type DataTypes = {
+  post: Post;
+  comments: Comment[];
+  user: User;
+};
+
 const componentName = 'SinglePost';
 
-const SinglePost = ({ params, location, serverData }: PageProps) => {
-  usePrivateRoute(location);
+const SinglePost = ({ id, serverData }: PageProps & { id: string }) => {
   useConsoleLog(componentName);
 
-  const id = params[`id`];
-
-  const apiPost = (serverData as any)?.post || useApi<Post>(Endpoints.post, id);
-  const apiComments = (serverData as any)?.comments || useApi<Comment[]>(Endpoints.comment);
-  const apiUser = (serverData as any)?.user || useApi<User>(Endpoints.user, apiPost?.userId);
+  const { result: apiPost } = useApi<Post>(Endpoints.post, !!(serverData as DataTypes)?.post, id);
+  const { result: apiComments } = useApi<Comment[]>(
+    Endpoints.comment,
+    !!(serverData as DataTypes)?.comments,
+  );
+  const { result: apiUser } = useApi<User>(
+    Endpoints.user,
+    !!(serverData as DataTypes)?.user,
+    apiPost?.userId,
+  );
 
   const post = useMemo(() => mapPost(apiPost, apiComments), [mapPost, apiPost, apiComments]);
 
@@ -56,14 +64,7 @@ const SinglePost = ({ params, location, serverData }: PageProps) => {
   );
 };
 
-export const Head = ({ params, serverData }: PageProps) => {
-  const apiPost = (serverData as any)?.post || useApi<Post>(Endpoints.post, params.id);
-
-  return <SEO title={apiPost?.title} />;
-};
-
-export async function getServerData({ params }: PageProps) {
-  const id = params[`id`];
+export async function getServerData({ id }: PageProps & { id: string }) {
   const postUrl = `${process.env.GATSBY_API_URL}/${Endpoints.post}${id ? `/${id}` : ''}`;
   const commentsUrl = `${process.env.GATSBY_API_URL}/${Endpoints.comment}`;
 

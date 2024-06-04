@@ -1,12 +1,11 @@
-import * as React from 'react';
-import TextInput, { TextInputType } from '../inputs/TextInput';
-
-import AuthContext from 'contexts/AuthContext';
+import SubmitButton from 'components/buttons/SubmitButton';
+import PasswordInput from 'components/inputs/PasswordInput';
+import TextInput, { TextInputType } from 'components/inputs/TextInput';
+import { navigate } from 'gatsby';
 import useConsoleLog from 'hooks/useConsoleLog';
 import useForm, { ValidatorType } from 'hooks/useForm';
-import { useContext } from 'react';
-import SubmitButton from '../buttons/SubmitButton';
-import PasswordInput from '../inputs/PasswordInput';
+import * as React from 'react';
+import { handleLogin } from 'services/auth';
 
 const componentName = 'LoginForm';
 
@@ -24,11 +23,14 @@ const fields = {
 };
 
 const LoginForm = () => {
-  const { setAuthenticated } = useContext(AuthContext);
-
   useConsoleLog(componentName);
 
   const { submitted, handleInput, handleSubmitForm, inputState } = useForm(fields);
+
+  const handleLoginSuccess = React.useCallback(() => {
+    handleLogin(inputState.email.value);
+    navigate('/app');
+  }, [inputState]);
 
   return (
     <form className="flex flex-col mt-6">
@@ -54,9 +56,7 @@ const LoginForm = () => {
       </div>
       <SubmitButton
         text="Login"
-        onClick={(e: React.FormEvent) =>
-          handleSubmitForm(e, () => setAuthenticated && setAuthenticated(true))
-        }
+        onClick={(e: React.FormEvent) => handleSubmitForm(e, handleLoginSuccess)}
       />
     </form>
   );

@@ -1,8 +1,7 @@
+import AuthContext from 'contexts/AuthContext';
+import useConsoleLog from 'hooks/useConsoleLog';
 import * as React from 'react';
 import { useCallback } from 'react';
-import AuthContext from '../context/AuthContext';
-import useConsoleLog from '../hooks/useConsoleLog';
-import Button from './Button';
 
 const componentName = 'LogoutButton';
 
@@ -15,7 +14,15 @@ const LogoutButton = () => {
     setAuthenticated && setAuthenticated(!authenticated);
   }, [authenticated]);
 
-  return <Button text="Logout" onClick={handleButtonClick} />;
+  return (
+    <button
+      type="button"
+      onClick={handleButtonClick}
+      className="text-sm font-bold uppercase hover:text-red"
+    >
+      Logout
+    </button>
+  );
 };
 
 export default LogoutButton;

@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 
-type UseNextPreviousProps = {
+type UsePaginationProps = {
   totalCount: number;
   page: number;
   perPage: number;
 };
 
-const useNextPrevious = ({ totalCount, page = 1, perPage }: UseNextPreviousProps) => {
+const usePagination = ({ totalCount, page = 1, perPage }: UsePaginationProps) => {
   const totalPageCount = useMemo(() => Math.ceil(totalCount / perPage), [totalCount, perPage]);
   const showNext = useMemo(() => page < totalPageCount, [page, totalPageCount]);
   const showPrevious = useMemo(() => page > 1, [page]);
@@ -14,4 +14,4 @@ const useNextPrevious = ({ totalCount, page = 1, perPage }: UseNextPreviousProps
   return { showNext, showPrevious };
 };
 
-export default useNextPrevious;
+export default usePagination;

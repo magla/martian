@@ -1,6 +1,6 @@
+import Logo from 'components/svgs/Logo';
+import useConsoleLog from 'hooks/useConsoleLog';
 import * as React from 'react';
-import useConsoleLog from '../hooks/useConsoleLog';
-import Logo from './Logo';
 
 const componentName = 'LogoTitle';
 

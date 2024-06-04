@@ -1,5 +1,5 @@
+import useConsoleLog from 'hooks/useConsoleLog';
 import React, { ChangeEventHandler, ReactElement, forwardRef } from 'react';
-import useConsoleLog from '../hooks/useConsoleLog';
 
 export enum TextInputType {
   text = 'text',

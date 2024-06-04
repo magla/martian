@@ -1,20 +1,22 @@
+import SearchInput from 'components/inputs/SearchInput';
+import Header from 'components/layout/Header';
+import Layout from 'components/layout/Layout';
+import SEO from 'components/layout/SEO';
+import PostList from 'components/posts/PostList';
+import SearchContext from 'contexts/SearchContext';
+import useApi, { Endpoints } from 'hooks/useApi';
+import useConsoleLog from 'hooks/useConsoleLog';
+import usePrivateRoute from 'hooks/usePrivateRoute';
+import useSiteMetadata from 'hooks/useSiteMetadata';
+import { mapPosts } from 'mappers/post';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-import Layout from '../components/Layout';
-import PostList from '../components/PostList';
-import Search from '../components/Search';
-import SearchContext from '../context/SearchContext';
-import useApi, { Endpoints } from '../hooks/useApi';
-import useConsoleLog from '../hooks/useConsoleLog';
-import usePrivateRoute from '../hooks/usePrivateRoute';
-import useSiteMetadata from '../hooks/useSiteMetadata';
-import { AppPost, mapPosts } from '../mappers/post';
-import { Comment, Post, User } from '../types';
+import { AppPost, Comment, Post, User } from '../types';
 
 const componentName = 'App';
 
 const App = () => {
+  useConsoleLog(componentName);
+
   const { title } = useSiteMetadata();
   const [filteredPosts, setFilteredPosts] = useState<(AppPost | undefined)[]>([]);
 
@@ -29,7 +31,6 @@ const App = () => {
   );
 
   usePrivateRoute();
-  useConsoleLog(componentName);
 
   useEffect(() => {
     setFilteredPosts(results as AppPost[]);
@@ -42,14 +43,15 @@ const App = () => {
   return (
     <div className="mb-40">
       <Header text={`${title} Blog`} showLogout>
-        <Search searchData={posts} searchKeys={['user.name', 'user.username']} />
+        <SearchInput searchData={posts} searchKeys={['user.name', 'user.username']} />
       </Header>
       <Layout>
         <PostList posts={filteredPosts} />
       </Layout>
-      <Footer text="Copywright @2024" />
     </div>
   );
 };
+
+export const Head = () => <SEO title="Martian Blog" />;
 
 export default App;

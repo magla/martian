@@ -1,11 +1,13 @@
+import ClearButton from 'components/buttons/ClearButton';
+import SearchButton from 'components/buttons/SearchButton';
+import SearchContext from 'contexts/SearchContext';
 import Fuse from 'fuse.js';
+import useConsoleLog from 'hooks/useConsoleLog';
 import debounce from 'lodash.debounce';
 import React, { ChangeEvent, useCallback, useContext, useMemo, useRef, useState } from 'react';
-import SearchContext from '../context/SearchContext';
-import useConsoleLog from '../hooks/useConsoleLog';
 import TextInput from './TextInput';
 
-const componentName = 'Search';
+const componentName = 'SearchInput';
 const fuseOptions = {
   includeScore: true,
   useExtendedSearch: true,
@@ -13,7 +15,7 @@ const fuseOptions = {
   threshold: 0.2,
 };
 
-const Search = ({
+const SearchInput = ({
   searchData = [],
   searchKeys = [],
   onSearch,
@@ -22,6 +24,9 @@ const Search = ({
   searchKeys?: string[];
   onSearch?: (values: string[]) => void;
 }) => {
+  useConsoleLog(componentName);
+
+  const [query, setQuery] = useState('');
   const [searchClicked, setSearchClicked] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { setResults } = useContext(SearchContext);
@@ -35,8 +40,6 @@ const Search = ({
     [searchData, searchKeys],
   );
 
-  useConsoleLog(componentName);
-
   const handleClickSearch = useCallback(() => {
     inputRef.current && inputRef.current.focus();
 
@@ -45,6 +48,8 @@ const Search = ({
 
   const search = useCallback(
     debounce((searchQuery) => {
+      setQuery(searchQuery.trim());
+
       if (searchQuery.trim() === '') {
         setResults && setResults(searchData);
         onSearch && onSearch(searchData);
@@ -68,6 +73,8 @@ const Search = ({
     search('');
   }, [inputRef, search]);
 
+  const showClear = useMemo(() => !!query, [query]);
+
   return (
     <div className="items-center justify-between hidden mx-12 sm:flex grow">
       <div className={`${searchClicked ? 'w-full' : 'w-0'} duration-300 overflow-hidden`}>
@@ -77,38 +84,12 @@ const Search = ({
           placeholder="Search by user"
           onChange={(e: ChangeEvent<HTMLInputElement>) => search(e.target.value)}
         >
-          <button onClick={handleClickClear}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-          </button>
+          {showClear ? <ClearButton onClick={handleClickClear} /> : undefined}
         </TextInput>
+        <SearchButton onClick={handleClickSearch} />
       </div>
-      <button onClick={handleClickSearch} className="ml-6">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-          />
-        </svg>
-      </button>
     </div>
   );
 };
 
-export default Search;
+export default SearchInput;

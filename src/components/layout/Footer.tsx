@@ -1,5 +1,5 @@
+import useConsoleLog from 'hooks/useConsoleLog';
 import * as React from 'react';
-import useConsoleLog from '../hooks/useConsoleLog';
 import Layout from './Layout';
 
 const componentName = 'Footer';

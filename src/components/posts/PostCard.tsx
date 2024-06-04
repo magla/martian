@@ -1,7 +1,7 @@
+import useConsoleLog from 'hooks/useConsoleLog';
 import * as React from 'react';
 import { useMemo } from 'react';
-import useConsoleLog from '../hooks/useConsoleLog';
-import { AppPost } from '../mappers/post';
+import { AppPost } from 'types';
 
 const componentName = 'PostCard';
 

@@ -1,5 +1,5 @@
+import MartianContext from 'contexts/MarianContext';
 import { useContext, useEffect } from 'react';
-import MartianContext from '../context/MarianContext';
 
 const useConsoleLog = (componentName: string) => {
   const text = useContext(MartianContext);

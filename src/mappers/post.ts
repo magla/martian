@@ -1,9 +1,4 @@
-import { Comment, Post, User } from '../types';
-
-export interface AppPost extends Post {
-  comments: Comment[];
-  user?: User;
-}
+import { AppPost, Comment, Post, User } from '../types';
 
 export const mapPost = (post?: Post, comments?: Comment[], users?: User[]): AppPost | undefined => {
   if (!post) return undefined;

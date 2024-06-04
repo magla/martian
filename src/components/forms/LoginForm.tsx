@@ -1,12 +1,12 @@
 import * as React from 'react';
-import TextInput, { TextInputType } from './TextInput';
+import TextInput, { TextInputType } from '../inputs/TextInput';
 
+import AuthContext from 'contexts/AuthContext';
+import useConsoleLog from 'hooks/useConsoleLog';
+import useForm, { ValidatorType } from 'hooks/useForm';
 import { useContext } from 'react';
-import AuthContext from '../context/AuthContext';
-import useConsoleLog from '../hooks/useConsoleLog';
-import useForm, { ValidatorType } from '../hooks/useForm';
-import PasswordInput from './PasswordInput';
-import SubmitButton from './SubmitButton';
+import SubmitButton from '../buttons/SubmitButton';
+import PasswordInput from '../inputs/PasswordInput';
 
 const componentName = 'LoginForm';
 

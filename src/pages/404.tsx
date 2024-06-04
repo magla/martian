@@ -1,8 +1,8 @@
+import Centered from 'components/layout/Centered';
+import Header from 'components/layout/Header';
+import useConsoleLog from 'hooks/useConsoleLog';
+import useSiteMetadata from 'hooks/useSiteMetadata';
 import React from 'react';
-import Centered from '../components/Centered';
-import Header from '../components/Header';
-import useConsoleLog from '../hooks/useConsoleLog';
-import useSiteMetadata from '../hooks/useSiteMetadata';
 
 const componentName = 'NotFoundPage';
 

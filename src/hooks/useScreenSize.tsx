@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config.js';
-import useConsoleLog from '../hooks/useConsoleLog';
 
 const fullConfig = resolveConfig(tailwindConfig);
-const componentName = 'PostList';
 
 const useScreenSize = () => {
-  useConsoleLog(componentName);
-
   const { md, lg } = fullConfig.theme.screens;
   const [windowSize, setWindowSize] = useState(window.screen.availWidth);
 

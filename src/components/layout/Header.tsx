@@ -1,15 +1,15 @@
+import LogoutButton from 'components/buttons/LogoutButton';
+import useConsoleLog from 'hooks/useConsoleLog';
 import * as React from 'react';
-import useConsoleLog from '../hooks/useConsoleLog';
 import Layout from './Layout';
 import LogoTitle from './LogoTitle';
-import LogoutButton from './LogoutButton';
 
 const componentName = 'Header';
 
 type HeaderProps = {
   text: string | Queries.Maybe<string>;
   showLogout?: boolean;
-  children: React.ReactElement;
+  children?: React.ReactElement;
 };
 
 const Header = ({ text, showLogout = false, children }: HeaderProps) => {

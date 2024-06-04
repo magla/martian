@@ -1,4 +1,4 @@
-import Pagination from 'components/pagination/Pagination';
+import Pagination from 'components/pagination/NextPrevious';
 import useConsoleLog from 'hooks/useConsoleLog';
 import useScreenSize from 'hooks/useScreenSize';
 import * as React from 'react';

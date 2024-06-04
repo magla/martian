@@ -6,13 +6,18 @@ const fullConfig = resolveConfig(tailwindConfig);
 
 const useScreenSize = () => {
   const { md, lg } = fullConfig.theme.screens;
-  const [windowSize, setWindowSize] = useState(window.screen.availWidth);
+  const [windowSize, setWindowSize] = useState<number>(0);
 
   useEffect(() => {
     const listener = () => setWindowSize(window.screen.availWidth);
-    window.addEventListener('resize', listener);
 
-    return () => window.removeEventListener('resize', listener);
+    window.addEventListener('resize', listener);
+    window.addEventListener('load', listener);
+
+    return () => {
+      window.removeEventListener('resize', listener);
+      window.removeEventListener('load', listener);
+    };
   }, []);
 
   return {

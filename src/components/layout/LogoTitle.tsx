@@ -13,12 +13,12 @@ const LogoTitle = ({ text }: LogoTitleProps) => {
 
   return (
     <div className="py-6">
-      <a href="/app">
+      <button type="button">
         <div className="flex gap-3">
           <Logo />
           <h1>{text}</h1>
         </div>
-      </a>
+      </button>
     </div>
   );
 };

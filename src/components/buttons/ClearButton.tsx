@@ -1,4 +1,4 @@
-import Clear from 'components/svgs/Search';
+import Clear from 'components/svgs/Clear';
 import useConsoleLog from 'hooks/useConsoleLog';
 import React from 'react';
 

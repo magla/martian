@@ -1,5 +1,6 @@
 import LoginForm from 'components/forms/LoginForm';
 import Centered from 'components/layout/Centered';
+import Footer from 'components/layout/Footer';
 import LogoTitle from 'components/layout/LogoTitle';
 import SEO from 'components/layout/SEO';
 import AuthContext from 'contexts/AuthContext';
@@ -23,12 +24,15 @@ const Login = () => {
   }
 
   return (
-    <Centered>
-      <div className="my-6">
-        <LogoTitle text={title} />
-        <LoginForm />
-      </div>
-    </Centered>
+    <>
+      <Centered>
+        <div className="my-6">
+          <LogoTitle text="sadf" />
+          <LoginForm />
+        </div>
+      </Centered>
+      <Footer />
+    </>
   );
 };
 

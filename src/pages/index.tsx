@@ -11,14 +11,13 @@ import { isLoggedIn } from 'services/auth';
 
 const componentName = 'Login';
 
-const Login = (props: PageProps) => {
+const Login = (_: PageProps) => {
   const { title } = useSiteMetadata();
 
   useConsoleLog(componentName);
 
   if (isLoggedIn()) {
     navigate('/app');
-    return null;
   }
 
   return (

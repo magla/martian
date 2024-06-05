@@ -46,7 +46,9 @@ const SinglePost = ({ id, serverData }: PageProps & { id: string }) => {
             {post?.title}
           </h2>
           <div className="text-sm text-black">
-            <p className="mb-2 leading-none text-darkGray">{apiUser?.name}</p>
+            <p className="mb-2 leading-none text-darkGray">
+              {apiUser?.name} (@{apiUser?.username})
+            </p>
           </div>
         </div>
       </div>

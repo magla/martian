@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config.js';
 
@@ -8,15 +8,14 @@ const useScreenSize = () => {
   const { md, lg } = fullConfig.theme.screens;
   const [windowSize, setWindowSize] = useState<number>(0);
 
-  useEffect(() => {
-    const listener = () => setWindowSize(window.screen.availWidth);
+  const listener = useCallback(() => setWindowSize(window.screen.availWidth), []);
 
+  useEffect(() => {
+    listener();
     window.addEventListener('resize', listener);
-    window.addEventListener('load', listener);
 
     return () => {
       window.removeEventListener('resize', listener);
-      window.removeEventListener('load', listener);
     };
   }, []);
 

@@ -32,7 +32,6 @@ function Pagination<T>({ onChange, data, perPage }: PaginationProps<T>) {
   );
 
   useEffect(() => {
-    console.log('slice');
     slice(1);
   }, [data, slice, perPage]);
 

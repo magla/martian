@@ -3,7 +3,7 @@ import * as React from 'react';
 
 const componentName = 'Next';
 
-function Next() {
+function Next({ size = 6 }: { size?: number }) {
   useConsoleLog(componentName);
 
   return (
@@ -13,7 +13,7 @@ function Next() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="size-12"
+      className={`size-${size}`}
     >
       <path
         strokeLinecap="round"

@@ -10,7 +10,7 @@ function NextButton({ onClick }: { onClick: () => void }) {
   return (
     <button className="flex items-center gap-2 ml-auto mr-0 hover:text-red" onClick={onClick}>
       Next
-      <Next size={12} />
+      <Next size={10} />
     </button>
   );
 }

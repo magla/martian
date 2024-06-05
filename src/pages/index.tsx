@@ -1,27 +1,22 @@
-import * as React from "react";
-import { graphql, PageProps } from "gatsby";
+import * as React from 'react';
+import Header from '../components/Header';
+import LoginForm from '../components/LoginForm';
+import SEO from '../components/SEO';
+import { MartianProvider } from '../context/MarianContext';
+import { useSiteMetadata } from '../hooks';
 
-const BlogIndex = ({ data }: PageProps<Queries.Query>) => {
-  const siteTitle = data.site?.siteMetadata?.title || `Title`;
+const App = () => {
+  const { title } = useSiteMetadata();
 
   return (
-    <div>
-      <h1>{siteTitle}</h1>
-      <p>No blog posts found.</p>
-    </div>
+    <MartianProvider>
+      <div className="flex flex-col w-full p-8 mx-auto bg-white md:p-10 md:max-w-md">
+        <Header text={title} />
+        <LoginForm />
+      </div>
+    </MartianProvider>
   );
 };
+export const Head = () => <SEO />;
 
-export default BlogIndex;
-
-export const Head = () => <div title="All posts" />;
-
-export const query = graphql`
-  query BlogIndex {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`;
+export default App;

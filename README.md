@@ -10,7 +10,7 @@ Powered by Gatsby framework
 Tech used: Tailwind CSS, React, React DOM, Typescript, fuse.js, isomorphic-fetch
 
 ## 🚀 Quick start
-Create a `.env.development` file with the values shared with you by the developer.
+Create a `.env.production` file with the values shared with you by the developer.
 
 Navigate into the directory and start it up:
 

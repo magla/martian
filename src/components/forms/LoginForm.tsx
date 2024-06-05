@@ -1,24 +1,24 @@
 import * as React from 'react';
-import TextInput, { TextInputType } from './TextInput';
+import TextInput, { TextInputType } from '../inputs/TextInput';
 
+import AuthContext from 'contexts/AuthContext';
+import useConsoleLog from 'hooks/useConsoleLog';
+import useForm, { ValidatorType } from 'hooks/useForm';
 import { useContext } from 'react';
-import AuthContext from '../context/AuthContext';
-import useConsoleLog from '../hooks/useConsoleLog';
-import useForm, { ValidatorType } from '../hooks/useForm';
-import PasswordInput from './PasswordInput';
-import SubmitButton from './SubmitButton';
+import SubmitButton from '../buttons/SubmitButton';
+import PasswordInput from '../inputs/PasswordInput';
 
 const componentName = 'LoginForm';
 
 const fields = {
   email: {
     type: TextInputType.email,
-    defaultValue: 'your@email.com',
+    defaultValue: process.env.GATSBY_USERNAME,
     validators: [ValidatorType.required, ValidatorType.email],
   },
   password: {
     type: TextInputType.password,
-    defaultValue: '123456',
+    defaultValue: process.env.GATSBY_PASSWORD,
     validators: [ValidatorType.required],
   },
 };
@@ -31,7 +31,7 @@ const LoginForm = () => {
   const { submitted, handleInput, handleSubmitForm, inputState } = useForm(fields);
 
   return (
-    <form className="flex flex-col px-4">
+    <form className="flex flex-col mt-6">
       <div className="mb-6">
         <TextInput
           label="Email"

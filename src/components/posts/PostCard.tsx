@@ -1,9 +1,7 @@
+import useConsoleLog from 'hooks/useConsoleLog';
 import * as React from 'react';
 import { useMemo } from 'react';
-import useApi, { Endpoints } from '../hooks/useApi';
-import useConsoleLog from '../hooks/useConsoleLog';
-import { AppPost } from '../mappers/post';
-import { User } from '../types';
+import { AppPost } from 'types';
 
 const componentName = 'PostCard';
 
@@ -14,7 +12,6 @@ const PostCard = ({ post }: { post?: AppPost }) => {
     return null;
   }
 
-  const user = useApi<User>(Endpoints.user, post.userId);
   const commentsText = useMemo(() => (post.comments.length === 1 ? 'comment' : 'comments'), [post]);
 
   return (
@@ -23,7 +20,7 @@ const PostCard = ({ post }: { post?: AppPost }) => {
         <div className="flex flex-col justify-between leading-normal">
           <h2 className="mb-2 font-bold text-l first-letter:uppercase">{post.title}</h2>
           <div className="text-sm text-black">
-            <p className="mb-2 leading-none text-darkGray">{user?.name}</p>
+            <p className="mb-2 leading-none text-darkGray">{post.user?.name}</p>
             <p className="mb-2 leading-none text-darkGray">
               {post.comments.length} {commentsText}
             </p>

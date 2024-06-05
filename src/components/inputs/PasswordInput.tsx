@@ -1,14 +1,14 @@
+import EyeButton from 'components/buttons/EyeButton';
+import useConsoleLog from 'hooks/useConsoleLog';
 import React, { useCallback, useMemo, useState } from 'react';
-import useConsoleLog from '../hooks/useConsoleLog';
-import Eye from './Eye';
 import TextInput, { TextInputProps, TextInputType } from './TextInput';
 
 const componentName = 'PasswordInput';
 
 const PasswordInput = ({ label, name, autoComplete, ...props }: TextInputProps) => {
-  const [hidePassword, setHidePassword] = useState(true);
-
   useConsoleLog(componentName);
+
+  const [hidePassword, setHidePassword] = useState(true);
 
   const handleClick = useCallback(() => {
     setHidePassword(!hidePassword);
@@ -21,7 +21,7 @@ const PasswordInput = ({ label, name, autoComplete, ...props }: TextInputProps) 
 
   return (
     <TextInput label={label} type={inputType} name={name} autoComplete={autoComplete} {...props}>
-      <Eye show={!hidePassword} onClick={handleClick} />
+      <EyeButton show={!hidePassword} onClick={handleClick} />
     </TextInput>
   );
 };

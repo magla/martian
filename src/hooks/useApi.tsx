@@ -11,11 +11,11 @@ export function useAPI<T>(endpoint: Endpoints, id?: string | number): T | undefi
 
   useEffect(() => {
     const fetchFromAPI = async () => {
-      const url = `https://demo.martian.services/api/${endpoint}${id ? `/${id}` : ''}`;
+      const url = `${process.env.GATSBY_API_URL}/${endpoint}${id ? `/${id}` : ''}`;
 
       const result = await fetch(url, {
         headers: new Headers({
-          'X-Auth': 'bWFydGlhbmFuZG1hY2hpbmU=',
+          'X-Auth': process.env.GATSBY_BEARER_TOKEN || '',
         }),
       });
 

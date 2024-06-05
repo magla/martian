@@ -1,12 +1,12 @@
+import LoginForm from 'components/forms/LoginForm';
+import Centered from 'components/layout/Centered';
+import LogoTitle from 'components/layout/LogoTitle';
+import SEO from 'components/layout/SEO';
+import AuthContext from 'contexts/AuthContext';
 import { navigate } from 'gatsby';
+import useConsoleLog from 'hooks/useConsoleLog';
+import useSiteMetadata from 'hooks/useSiteMetadata';
 import React, { useContext } from 'react';
-import Centered from '../components/Centered';
-import Header from '../components/Header';
-import LoginForm from '../components/LoginForm';
-import SEO from '../components/SEO';
-import AuthContext from '../context/AuthContext';
-import useConsoleLog from '../hooks/useConsoleLog';
-import useSiteMetadata from '../hooks/useSiteMetadata';
 
 const componentName = 'Login';
 
@@ -24,10 +24,10 @@ const Login = () => {
 
   return (
     <Centered>
-      <>
-        <Header text={title} showLogout={authenticated} />
+      <div className="my-6">
+        <LogoTitle text={title} />
         <LoginForm />
-      </>
+      </div>
     </Centered>
   );
 };

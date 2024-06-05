@@ -3,12 +3,12 @@ import type { GatsbyConfig } from 'gatsby';
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `Martian`,
-    siteUrl: `https://www.yourdomain.tld`,
   },
   graphqlTypegen: true,
   plugins: [
     'gatsby-plugin-postcss',
     'gatsby-plugin-sitemap',
+    'gatsby-plugin-resolve-src',
     {
       resolve: 'gatsby-plugin-manifest',
       options: {

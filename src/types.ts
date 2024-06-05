@@ -44,3 +44,8 @@ export interface Company {
 }
 
 export type DataType = Post | User | Comment | Address | Geo | Company;
+
+export interface AppPost extends Post {
+  comments: Comment[];
+  user?: User;
+}

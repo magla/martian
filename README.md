@@ -6,33 +6,17 @@
 </h1>
 
 ## Dev info
-
 Powered by Gatsby framework
-
-Tech used: Tailwind CSS, React, React DOM, Typescript, fuse.js, iso
+Tech used: Tailwind CSS, React, React DOM, Typescript, fuse.js, isomorphic-fetch
 
 ## 🚀 Quick start
+Create a `.env.development` file with the values shared with you by the developer.
 
-    Navigate into the directory and start it up.
+Navigate into the directory and start it up:
 
-1.  **Install node packages**
-
-    ```shell
     yarn
-    ```
-
-1.  **Build the site**
-
-    ```shell
     yarn build
-    ```
-
-1.  **Serve the site**
-
-    ```shell
     yarn serve
-    ```
 
-1.  **Open the site!**
-
+**Open the site!**
     Your site is now running at http://localhost:9000!

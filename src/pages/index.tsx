@@ -1,27 +1,38 @@
-import * as React from "react";
-import { graphql, PageProps } from "gatsby";
+import LoginForm from 'components/forms/LoginForm';
+import Centered from 'components/layout/Centered';
+import Footer from 'components/layout/Footer';
+import LogoTitle from 'components/layout/LogoTitle';
+import SEO from 'components/layout/SEO';
+import { PageProps, navigate } from 'gatsby';
+import useConsoleLog from 'hooks/useConsoleLog';
+import useSiteMetadata from 'hooks/useSiteMetadata';
+import React from 'react';
+import { isLoggedIn } from 'services/auth';
 
-const BlogIndex = ({ data }: PageProps<Queries.Query>) => {
-  const siteTitle = data.site?.siteMetadata?.title || `Title`;
+const componentName = 'Login';
+
+const Login = (_: PageProps) => {
+  const { title } = useSiteMetadata();
+
+  useConsoleLog(componentName);
+
+  if (isLoggedIn()) {
+    navigate('/app');
+  }
 
   return (
-    <div>
-      <h1>{siteTitle}</h1>
-      <p>No blog posts found.</p>
-    </div>
+    <>
+      <Centered>
+        <div className="my-6">
+          <LogoTitle text={title} />
+          <LoginForm />
+        </div>
+      </Centered>
+      <Footer />
+    </>
   );
 };
 
-export default BlogIndex;
+export const Head = () => <SEO title="Welcome to Martian" />;
 
-export const Head = () => <div title="All posts" />;
-
-export const query = graphql`
-  query BlogIndex {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`;
+export default Login;

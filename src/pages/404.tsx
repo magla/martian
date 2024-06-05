@@ -1,49 +1,35 @@
-import * as React from "react";
-import { Link, HeadFC, PageProps } from "gatsby";
+import Centered from 'components/layout/Centered';
+import Layout from 'components/layout/Layout';
+import LogoTitle from 'components/layout/LogoTitle';
+import { Link } from 'gatsby';
+import useConsoleLog from 'hooks/useConsoleLog';
+import useSiteMetadata from 'hooks/useSiteMetadata';
+import React from 'react';
 
-const pageStyles = {
-  color: "#232129",
-  padding: "96px",
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-};
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-};
+const componentName = 'NotFoundPage';
 
-const paragraphStyles = {
-  marginBottom: 48,
-};
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-};
+const NotFoundPage = (_: { default: boolean }) => {
+  const { title } = useSiteMetadata();
 
-const NotFoundPage: React.FC<PageProps> = () => {
+  useConsoleLog(componentName);
+
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>Page not found</h1>
-      <p style={paragraphStyles}>
-        Sorry 😔, we couldn’t find what you were looking for.
-        <br />
-        {process.env.NODE_ENV === "development" ? (
-          <>
-            <br />
-            Try creating a page in <code style={codeStyles}>src/pages/</code>.
-            <br />
-          </>
-        ) : null}
-        <br />
-        <Link to="/">Go home</Link>.
-      </p>
-    </main>
+    <>
+      <Layout>
+        <div className="flex items-center justify-between my-6 bg-white">
+          <Link to="/app">
+            <LogoTitle text={title} />
+          </Link>
+        </div>
+      </Layout>
+      <Centered>
+        <div className="text-center">
+          <h1>Page Not Found</h1>
+          <p className="mt-4">Sorry, the requested page does not exist.</p>
+        </div>
+      </Centered>
+    </>
   );
 };
 
 export default NotFoundPage;
-
-export const Head: HeadFC = () => <title>Not found</title>;

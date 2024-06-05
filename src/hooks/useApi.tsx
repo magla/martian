@@ -6,28 +6,63 @@ export enum Endpoints {
   comment = 'comments',
 }
 
-export function useAPI<T>(endpoint: Endpoints, id?: string | number): T | undefined {
+export async function fetchFromAPI<T>(url: string): Promise<T | undefined> {
+  try {
+    const result = await fetch(url, {
+      headers: new Headers({
+        'X-Auth': process.env.GATSBY_BEARER_TOKEN || '',
+      }),
+    });
+
+    if (!result.ok) {
+      throw new Error(`Response failed`);
+    }
+
+    const JSON = await result.json();
+
+    return JSON as T;
+  } catch (e: any) {
+    console.error(e.message);
+  }
+}
+
+export function useAPI<T>(
+  endpoint: Endpoints,
+  hasServerData?: boolean,
+  id?: string | number,
+): { result: T | undefined; loading: boolean } {
   const [JSONresult, setJSONResult] = useState<T>();
+  const [loading, setLoading] = useState(false);
+
+  if (hasServerData) {
+    return {
+      result: undefined,
+      loading,
+    };
+  }
 
   useEffect(() => {
-    const fetchFromAPI = async () => {
-      const url = `${process.env.GATSBY_API_URL}/${endpoint}${id ? `/${id}` : ''}`;
+    const url = `${process.env.GATSBY_API_URL}/${endpoint}${id ? `/${id}` : ''}`;
 
-      const result = await fetch(url, {
-        headers: new Headers({
-          'X-Auth': process.env.GATSBY_BEARER_TOKEN || '',
-        }),
-      });
-
-      const JSON = await result.json();
-
-      setJSONResult(JSON);
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const result = await fetchFromAPI<T>(url);
+        result && setJSONResult(result);
+        setLoading(false);
+      } catch (e: any) {
+        console.error(e.message);
+        setLoading(false);
+      }
     };
 
-    fetchFromAPI();
+    fetchData();
   }, [endpoint, id]);
 
-  return JSONresult;
+  return {
+    result: JSONresult,
+    loading,
+  };
 }
 
 export default useAPI;

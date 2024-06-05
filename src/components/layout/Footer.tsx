@@ -8,7 +8,7 @@ type FooterProps = {
   text?: string;
 };
 
-const Footer = ({ text }: FooterProps) => {
+const Footer = ({ text = 'Copyright @ 2024' }: FooterProps) => {
   useConsoleLog(componentName);
 
   return (

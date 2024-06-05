@@ -86,8 +86,8 @@ const SearchInput = ({
         >
           {showClear ? <ClearButton onClick={handleClickClear} /> : undefined}
         </TextInput>
-        <SearchButton onClick={handleClickSearch} />
       </div>
+      <SearchButton onClick={handleClickSearch} />
     </div>
   );
 };

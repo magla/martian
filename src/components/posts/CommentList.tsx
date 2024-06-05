@@ -11,7 +11,7 @@ const CommentList = ({ comments }: { comments?: CommentType[] }) => {
   return (
     <div className="pt-8">
       <h3 className="font-bold">Comments</h3>
-      <div>{comments?.map((comment) => <Comment comment={comment} />)}</div>
+      <div>{comments?.map((comment) => <Comment comment={comment} key={comment.id} />)}</div>
     </div>
   );
 };

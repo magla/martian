@@ -6,7 +6,7 @@ const componentName = 'Border';
 const Border = () => {
   useConsoleLog(componentName);
 
-  return <div className="border-b border-black border-opacity-20"></div>;
+  return <div className="border-b border-black border-opacity-20" />;
 };
 
 export default Border;

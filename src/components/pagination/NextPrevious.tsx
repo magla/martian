@@ -33,7 +33,7 @@ function Pagination<T>({ onChange, data, perPage }: PaginationProps<T>) {
 
   useEffect(() => {
     slice(1);
-  }, [slice, perPage]);
+  }, [data, slice, perPage]);
 
   return (
     <div className="flex justify-between">

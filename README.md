@@ -7,6 +7,7 @@
 
 ## Dev info
 Powered by Gatsby framework
+
 Tech used: Tailwind CSS, React, React DOM, Typescript, fuse.js, isomorphic-fetch
 
 Don't forget to check out `decisions.md`!

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useConsoleLog } from '../hooks/useConsoleLog';
-import { useSiteMetadata } from '../hooks/useSiteMetadata';
+import useConsoleLog from '../hooks/useConsoleLog';
+import useSiteMetadata from '../hooks/useSiteMetadata';
 
 const componentName = 'SEO';
 

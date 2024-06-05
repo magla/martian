@@ -1,50 +1,63 @@
 import * as React from 'react';
 import TextInput, { TextInputType } from './TextInput';
 
-import { useConsoleLog } from '../hooks/useConsoleLog';
-import useForm from '../hooks/useForm';
-import Button from './Button';
+import { useContext } from 'react';
+import AuthContext from '../context/AuthContext';
+import useConsoleLog from '../hooks/useConsoleLog';
+import useForm, { ValidatorType } from '../hooks/useForm';
 import PasswordInput from './PasswordInput';
+import SubmitButton from './SubmitButton';
 
 const componentName = 'LoginForm';
 
+const fields = {
+  email: {
+    type: TextInputType.email,
+    defaultValue: 'your@email.com',
+    validators: [ValidatorType.required, ValidatorType.email],
+  },
+  password: {
+    type: TextInputType.password,
+    defaultValue: '123456',
+    validators: [ValidatorType.required],
+  },
+};
+
 const LoginForm = () => {
+  const { setAuthenticated } = useContext(AuthContext);
+
   useConsoleLog(componentName);
 
-  const { formState, handleInput, handleSubmit } = useForm({
-    email: {
-      type: 'email',
-    },
-    password: {
-      type: 'password',
-    },
-  });
+  const { submitted, handleInput, handleSubmitForm, inputState } = useForm(fields);
 
   return (
-    <form className="flex flex-col">
+    <form className="flex flex-col px-4">
       <div className="mb-6">
         <TextInput
           label="Email"
           name="email"
-          type={TextInputType.email}
-          placeholder="your@email.com"
+          type={fields.email.type}
+          defaultValue={fields.email.defaultValue}
           autoComplete="on"
           onChange={handleInput}
-          errorText={formState.errors.email}
-          showError={!formState.valid && !!formState.errors.email}
+          {...(submitted && { errors: inputState.email.errors })}
         />
       </div>
       <div className="mb-6">
         <PasswordInput
           label="Password"
           name="password"
-          autoComplete="new-password"
           onChange={handleInput}
-          errorText={formState.errors.password}
-          showError={!formState.valid && !!formState.errors.password}
+          defaultValue={fields.password.defaultValue}
+          {...(submitted && { errors: inputState.password.errors })}
         />
       </div>
-      <Button text="Login" type="submit" onClick={handleSubmit} />
+      <SubmitButton
+        text="Login"
+        onClick={(e: React.FormEvent) =>
+          handleSubmitForm(e, () => setAuthenticated && setAuthenticated(true))
+        }
+      />
     </form>
   );
 };

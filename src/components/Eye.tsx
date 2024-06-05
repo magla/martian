@@ -1,5 +1,5 @@
 import React from 'react';
-import { useConsoleLog } from '../hooks/useConsoleLog';
+import useConsoleLog from '../hooks/useConsoleLog';
 
 interface EyeProps {
   show: boolean;

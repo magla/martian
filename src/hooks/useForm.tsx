@@ -1,87 +1,140 @@
-import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
-import { getDefaultValue, getFieldError, validateField } from '../utils/validator';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
 
 export interface FormState {
-  values: { [name: string]: string };
-  errors: { [name: string]: string };
   valid: boolean;
+  submitted: boolean;
 }
 
 interface Field {
-  [name: string]: {
-    type: string;
-    defaultValue?: string;
-  };
+  type: string;
+  defaultValue?: string;
+  validators?: ValidatorType[];
 }
 
-const useForm = (fields: Field) => {
-  const defaultValues = useCallback(() => {
-    const values = Object.keys(fields).reduce((previous, name) => {
-      const defaultValue = fields[name].defaultValue || getDefaultValue(fields[name].type);
+interface Input extends Field {
+  value: string;
+  errors: string[];
+}
 
-      return { ...previous, [name]: defaultValue };
+export enum ValidatorType {
+  email = 'email',
+  minLength = 'minLength',
+  required = 'required',
+}
+
+export const valid = (validator: ValidatorType, value: any) => {
+  if (!value) {
+    return false;
+  }
+
+  switch (validator) {
+    case ValidatorType.email:
+      return value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    case ValidatorType.minLength:
+      return value.length >= 6;
+    case ValidatorType.required:
+      return value.length > 0;
+    default:
+      return true;
+  }
+};
+
+export const validateField = (
+  name: string,
+  validators?: ValidatorType[],
+  value?: any,
+): string[] => {
+  let errors: string[] = [];
+
+  validators?.forEach((validator) => {
+    if (!valid(validator, value)) {
+      errors.push(getFieldError(validator, name));
+    }
+  });
+
+  return errors;
+};
+
+export const getFieldError = (validator: ValidatorType, name: string): string => {
+  switch (validator) {
+    case ValidatorType.email:
+      return 'Please input a valid email address';
+    case ValidatorType.minLength:
+      return `${name} should be 6 characters or more`;
+    case ValidatorType.required:
+      return `${name} is required`;
+    default:
+      return 'Field input invalid';
+  }
+};
+
+const useForm = (props: { [name: string]: Field }) => {
+  const [inputState, setInputState] = useState<{ [name: string]: Input }>({});
+  const [valid, setValid] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+
+  // Initial setup
+  useEffect(() => {
+    const state = Object.keys(props).reduce((previous, index) => {
+      const errors = validateField(index, props[index].validators, props[index].defaultValue);
+
+      return {
+        ...previous,
+        [index]: {
+          ...props[index],
+          value: props[index].defaultValue,
+          errors,
+        },
+      };
     }, {});
 
-    return values;
-  }, [fields]);
-
-  const [formState, setFormState] = useState<FormState>({
-    values: defaultValues(),
-    errors: {},
-    valid: true,
-  });
+    setInputState(state);
+  }, [props]);
 
   const handleInput = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const name = e.target.name;
       const value = e.target.value;
-      const type = e.target.type;
 
-      const isValid = validateField(type, value);
+      const fieldErrors = validateField(name, inputState[name].validators, value);
 
-      if (isValid) {
-        delete formState.errors[name];
+      if (fieldErrors.length) {
+        setValid(false);
       }
 
-      setFormState({
-        ...formState,
-        values: { ...formState.values, [name]: value },
-        errors: { ...formState.errors, ...(!isValid && { [name]: getFieldError(type) }) },
-      });
+      setInputState({ ...inputState, [name]: { ...inputState[name], value, errors: fieldErrors } });
     },
-    [formState, validateField],
+    [inputState, validateField],
   );
 
-  const validateForm = useCallback(() => {
-    const errors = Object.keys(fields).reduce((previous, name) => {
-      const isValid = validateField(fields[name].type, formState.values[name]);
-
-      return { ...previous, ...(!isValid && { [name]: getFieldError(fields[name].type) }) };
-    }, {});
-
-    const isValid = Object.keys(errors).length === 0 && errors.constructor === Object;
-
-    setFormState({
-      ...formState,
-      valid: isValid,
-      errors,
-    });
-  }, [formState, fields]);
-
-  const handleSubmit = useCallback(
-    (e: FormEvent) => {
+  const handleSubmitForm = useCallback(
+    (e: FormEvent, successFn?: Function) => {
       e.preventDefault();
-      validateForm();
+
+      const errorNumber = Object.keys(inputState).reduce((previous, name) => {
+        return previous + inputState[name].errors.length;
+      }, 0);
+
+      const isValid = errorNumber === 0;
+
+      setSubmitted(true);
+      setValid(isValid);
+
+      if (isValid && typeof successFn === 'function') {
+        successFn();
+      }
 
       return false;
     },
-    [formState],
+    [inputState],
   );
 
   return {
     handleInput,
-    handleSubmit,
-    formState,
+    handleSubmitForm,
+    valid,
+    submitted,
+    inputState,
   };
 };
 
